@@ -1,118 +1,73 @@
 // Cria um atalho mais curto para não precisar digitar document.querySelector() sempre
-const $ = document.querySelector.bind(document)
+const dcmt = document.querySelector.bind(document)
 
-//Valida o cpf informado pelo usuário
-function validarCPF(cpf) {	
-    cpf = $('#cpf').value
-
-	cpf = cpf.replace(/[^\d]+/g,'');	
-	if(cpf == '') return false;	
-	// Elimina CPFs invalidos conhecidos	
-	if (cpf.length != 11 || 
-		cpf == "00000000000" || 
-		cpf == "11111111111" || 
-		cpf == "22222222222" || 
-		cpf == "33333333333" || 
-		cpf == "44444444444" || 
-		cpf == "55555555555" || 
-		cpf == "66666666666" || 
-		cpf == "77777777777" || 
-		cpf == "88888888888" || 
-		cpf == "99999999999")
-			return false;		
-	// Valida 1o digito	
-	add = 0;	
-	for (i=0; i < 9; i ++)		
-		add += parseInt(cpf.charAt(i)) * (10 - i);	
-		rev = 11 - (add % 11);	
-		if (rev == 10 || rev == 11)		
-			rev = 0;	
-		if (rev != parseInt(cpf.charAt(9)))		
-			return false;		
-	// Valida 2o digito	
-	add = 0;	
-	for (i = 0; i < 10; i ++)		
-		add += parseInt(cpf.charAt(i)) * (11 - i);	
-	rev = 11 - (add % 11);	
-	if (rev == 10 || rev == 11)	
-		rev = 0;	
-	if (rev != parseInt(cpf.charAt(10)))
-		return false;		
-	return true;   
+const html = {
+        
+    links: [...dcmt('.abas-navegacao').children],
+    contents: [...dcmt('.area-form').children],
+    openTab: dcmt('[data-open]'),
+    buttons: [...dcmt('.buttons').children],
+    button: [...dcmt('.button').children]
 };
 
+function isCPF() {	
+    cpf = dcmt('#cpf').value
+    cpf = cpf.replace(/[^\d]+/g,'');
+    if(cpf == '') return false;	
+    // Elimina CPFs invalidos conhecidos	
+    if (cpf.length != 11)return false;	
+    // Valida 1o digito	
+    count = 0;	
+    for (i=0; i < 9; i ++)		
+        count += parseInt(cpf.charAt(i)) * (10 - i);	
+        dig = 11 - (count % 11);	
+        if (dig == 10 || dig == 11)		
+            dig = 0;	
+        if (dig != parseInt(cpf.charAt(9)))		
+            return false;		
+    // Valida 2o digito	
+    count = 0;	
+    for (i = 0; i < 10; i ++)		
+        count += parseInt(cpf.charAt(i)) * (11 - i);	
+    dig = 11 - (count % 11);	
+    if (dig == 10 || dig == 11)	
+        dig = 0;	
+    if (dig != parseInt(cpf.charAt(10)))
+        return false;		
+    return true; 
+};
 
-// Validar preenchimento formulário
-function validaDadosPreenchidos(){
-    
-    var userName = $('#name').value
-   
-if (userName === ''){
-    //console.log('O campo NOME é obrigatório')
-    alert('O campo NOME é obrigatório');
-        }
-
-    localStorage.setItem('nome', userName) 
-    validaDataNasc()
-
-if (validarCPF() == true ){
-        localStorage.setItem('cpf', cpfInformado)
-        showActiveContent('endereco')
-        
-}
-
-    else 
-        alert('CPF invalido')
-       
-            
-}
-
-
-
-
-
-
-function validaDataNasc(){
-    const dataNasc = $('#date').value;
-
-    if (dataNasc === '') {
-        //console.log('O campo data de nascimento é obrigatório')
-        alert('A data de nascimento é obrigatória')
-        
-         
-        
+// valida name usuario
+function validaNome (){
+    nome = dcmt('#name').value
+    if(nome == ''){
+        alert("Digite seu nome")
+        nome.focus()
     }
-
-    localStorage.setItem('dataNasc', dataNasc)
+    localStorage.setItem('nome', nome)
+    validaData()
+    if (isCPF() == true){
+        localStorage.setItem('cpf', cpf)
+        showActiveContent('endereco')
+    }else
+    alert('CPF inválido');
+    cpf.focus()
 };
 
-cpf.focus();
 
-// const html = {
-        
-//     links: [...$('.abas-navegacao').children],
-//     contents: [...$('.area-form').children],
-//     openTab: $('[data-open]'),
-//     buttons: [...$('.buttons').children],
-//     button: [...$('.button').children]
-// };
-    
+function validaData(){
+    const dataNasc = dcmt('#date').value
+    if (dataNasc == ''){
+        alert('Digite sua data de nascimento')
+        dataNasc.focus()
+    }
+    localStorage.setItem('dtNasc', dataNasc)
 
-// funçoes referentes as abas de navegação ( usada para dar contexto do que está sendo tratado )
-function AbasNavegation (){
+};
 
-        // Cria um objeto que pega as informações do DOM
+//function AbasNavegation (){
 
-    const html = {
-        
-        links: [...$('.abas-navegacao').children],
-        contents: [...$('.area-form').children],
-        openTab: $('[data-open]'),
-        buttons: [...$('.buttons').children],
-        button: [...$('.button').children]
-    };
-        
-                //função para ocultar o conteúdo das abas
+ //função para ocultar o conteúdo das abas
             function hideContent (){
                 
                 html.contents.forEach(section => {
@@ -122,20 +77,26 @@ function AbasNavegation (){
 
             //Remove o conteúdo de uma aba quando outra estiver selecionada 
             function removeActivesTabs(){
-                console.log('remove tabs')
+                html.links.forEach(abas =>{
+                    abas.className = abas.className.replace("active" , "");
+                })
             };
 
             //Mostra o  conteúdo que está ativo 
             function showActiveContent(id){
-                const abacontent = $('#' + id)
-                abacontent.style.display = "block"
+                hideContent()
+
+                const abaContent = dcmt('#' + id)
+                abaContent.style.display = "block"
+
+                id.className+="active";
 
             };
 
         // Ouve qual aba foi selecionada
         function abaSelecionada(event){
             
-            hideContent()
+            removeActivesTabs()
             
             const target = event.currentTarget
             showActiveContent(target.dataset.id)
@@ -154,34 +115,58 @@ function AbasNavegation (){
                         click.addEventListener('click', abaSelecionada)
                 })
 
-                html.button.forEach(click => {
-                click.addEventListener('click', abaSelecionada)
-        })
-            
-
         };
 
+        // consulta p cep na api dos correios
+        function consultCEP(){
+            const cep = dcmt("#cep").value;
+            //valida o cep
+            if(cep.length != 8 || cep === ""){
+                console.log('CEP inválido')
+            }else
+    
+            //pega o json recebido pela API viacep e altera os valores do input
+            var url = `https://viacep.com.br/ws/${cep}/json/`;
+            
+            $.getJSON(url, function(data){
+                $("#rua").val(data.logradouro);
+                $("#bairro").val(data.bairro);
+                $("#city").val(data.localidade);
+    
+                //converte o JSON para objeto
+                fetch(url).then(function(response){
+                    response.json().then(function(data){
+                        showResult(data);
+                    })
+                })
+            })
+        }
+
+        // mostra o resultado inseridos na primeira aba 
+
+        function show(){
+            html.final.innerHTML = `<p><br>Nome: ${localStorage.getItem('nome', nome)}<\p><br>
+                                    <p>Data de Nascimento: ${localStorage.getItem('dtNasc', dtNasc)}<\P><br>
+                                    <p>CPF: ${localStorage.getItem('cpf', cpf)}<\p>`
+        }
+
+        // motra o resultado com base no json retornado da api
+
+        function showResult(data){
+            html.final.innerHTML += `<br><p>${localStorage.getItem('rua', data.logradouro)}<\p><br>
+                                    <p>Bairro: ${localStorage.getItem('bairro', data.bairro)}<\p><br>
+                                    <p>Cidade: ${localStorage.getItem('cidade', data.localidade)}<\p>`
+        }
+        
         // Função que iniciará a aplicação
         function startApplication(){
             
             hideContent()
-            verificaEventos()
+            verificaEventos()   
+            localStorage.clear()
 
             html.openTab.click()
 
         };
         
-        return {
-           startApplication
-
-        }
-    }
-
-// Será executada quando a tela carregar 
-
- window.addEventListener('load', () => {
-    
-      const abasNavegation = AbasNavegation()
-      abasNavegation.startApplication()
-  });
-
+startApplication()
