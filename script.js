@@ -127,7 +127,7 @@ function validaData(){
     
             //pega o json recebido pela API viacep e altera os valores do input
             var url = `https://viacep.com.br/ws/${cep}/json/`;
-            
+
             $.getJSON(url, function(data){
                 $("#rua").val(data.logradouro);
                 $("#bairro").val(data.bairro);
@@ -168,5 +168,6 @@ function validaData(){
             html.openTab.click()
 
         };
+        
         
 startApplication()
