@@ -81,7 +81,7 @@ label {
 }
 
 
-#finalizacao {
+.finalizacao, h2 {
    text-align: center;
 }
 

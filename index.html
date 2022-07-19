@@ -44,21 +44,21 @@
                 <section id="endereco">
                     <form method="get" name ="forms2">
                         <label>Digite seu CEP</label>
-                        <input type="text" name="cep" id="cep" placeholder="Digite seu CEP" onchange="consultCEP"><br><br>
+                        <input type="text" name="cep" id="cep" placeholder="Digite seu CEP" maxlength="9"><br><br>
 
                         <label>Logradouro*</label>
-                        <input type="text" id="rua"><br>
+                        <input type="text" id="logradouro"><br>
 
                         <label>Bairro*</label>
                         <input type="text" id="bairro"><br>
 
-                        <label>Cidade*</label>
-                        <input type="text" id="city"><br><br>
+                        <label>Número*</label>
+                        <input type="text" id="numero"> <br><br>
 
                         <div class="buttons">
 
                             <button type="button" data-id="dados">Voltar</button>  
-                            <button type="button" data-id="finalizacao">Finalizar</button>
+                            <button type="button" data-id="finalizacao" onclick="show()">Finalizar</button>
 
                         </div>
 
