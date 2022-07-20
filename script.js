@@ -87,6 +87,8 @@ function validaData() {
         
     }
     localStorage.setItem('dtNasc', dataNasc)
+    
+
 
 };
 
