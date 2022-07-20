@@ -1,6 +1,9 @@
 // Cria um atalho mais curto para não precisar digitar document.querySelector() sempre
 const dcmt = document.querySelector.bind(document)
 
+let nome;
+let dataNasc;
+let cpf;
 
 const cep = dcmt('#cep');
 const bairro = dcmt('#bairro').value
@@ -23,9 +26,9 @@ const html = {
 tamCPF.addEventListener('keypress', () => {
     let inputLength = tamCPF.value.length
 
-    if (inputLength === 3 || inputLength === 7){
+    if (inputLength === 3 || inputLength === 7) {
         tamCPF.value += '.'
-    } else if (inputLength === 11){
+    } else if (inputLength === 11) {
         tamCPF.value += '-'
     }
 })
@@ -36,7 +39,19 @@ function isCPF() {
     cpf = cpf.replace(/[^\d]+/g, '');
     if (cpf == '') return false;
     // Elimina CPFs invalidos conhecidos	
-    if (cpf.length != 11) return false;
+    if (cpf.length != 11 ||
+        cpf == "00000000000" ||
+        cpf == "11111111111" ||
+        cpf == "22222222222" ||
+        cpf == "33333333333" ||
+        cpf == "44444444444" ||
+        cpf == "55555555555" ||
+        cpf == "66666666666" ||
+        cpf == "77777777777" ||
+        cpf == "88888888888" ||
+        cpf == "99999999999")
+
+        return false;
     // Valida 1o digito	
     count = 0;
     for (i = 0; i < 9; i++)
@@ -65,7 +80,7 @@ function validaNome() {
     nome = dcmt('#name').value
     if (nome == '') {
         alert("Digite seu nome")
-        
+
     }
     localStorage.setItem('nome', nome)
     validaData()
@@ -76,7 +91,7 @@ function validaNome() {
 
     } else
         alert('CPF inválido');
-    
+
 };
 
 
@@ -84,10 +99,10 @@ function validaData() {
     dataNasc = dcmt('#date').value
     if (dataNasc == '') {
         alert('Digite sua data de nascimento')
-        
+
     }
     localStorage.setItem('dtNasc', dataNasc)
-    
+
 
 
 };
@@ -109,6 +124,7 @@ function removeActivesTabs() {
     })
 };
 
+
 //Mostra o  conteúdo que está ativo 
 function showActiveContent(id) {
     hideContent()
@@ -117,6 +133,21 @@ function showActiveContent(id) {
     abaContent.style.display = "block"
 
     id.className += "active";
+
+
+
+    if (id == 'finalizacao') {
+
+        
+        consultaCEP()
+
+        localStorage.setItem('cep', dcmt('#cep').value)
+        localStorage.setItem('logradouro', dcmt('#logradouro').value)
+        localStorage.setItem('bairro', dcmt('#bairro').value)
+        localStorage.setItem('localidade', dcmt('#localidade').value)
+
+        show()
+    }
 
 };
 
@@ -147,13 +178,10 @@ function verificaEventos() {
 
 
 
-// valida o cep informado 
-if (cep.length < 9) {
-    alert('CEP invalido')
-} else {
+// valida o cep informado
 
-    
-    
+
+function consultaCEP() {
     // realiza conexão com api para trazer os dados a partir do cep informado
     const showData = (result) => {
         for (const campo in result) {
@@ -161,22 +189,19 @@ if (cep.length < 9) {
                 document.querySelector("#" + campo).value = result[campo]
             }
         }
-    
-        localStorage.setItem('cep', result.cep)
-        localStorage.setItem('logradouro', result.logradouro)
-        localStorage.setItem('bairro', result.bairro)
-        localStorage.setItem('localidade', result.localidade)
-        
-        
+
+
     }
 
     // evento para verificar o foco, afim de preencher os campos de forma dinamica 
+
+
     cep.addEventListener("blur", (e) => {
         let search = cep.value.replace("-", "")
 
-        if(search.length < 8){
+        if (search.length < 8 || search === '') {
             alert('CEP invalido')
-        }  
+        }
 
         const options = {
             method: 'GET',
@@ -195,6 +220,7 @@ if (cep.length < 9) {
             })
             .catch(e => console.log('Deu Erro' + e.message))
     })
+
 };
 
 // mostra o resultado inseridos na primeira aba 
@@ -202,17 +228,16 @@ if (cep.length < 9) {
 function show() {
 
     html.finalizacao.innerHTML = `<p><br>Nome: ${localStorage.getItem('nome')}<\p><br>
-                                              <p>Data de Nascimento: ${localStorage.getItem('dtNasc')}<\p><br>
-                                              <p>CPF: ${localStorage.getItem('cpf')}<\p>
-                                              <br><p>${localStorage.getItem('logradouro' )}<\p><br>
-                                              <p>Bairro: ${localStorage.getItem('bairro' )}<\p><br>
-                                              <p>Cidade: ${localStorage.getItem('localidade' )}<\p><br>`
+                                                  <p>Data de Nascimento: ${localStorage.getItem('dtNasc')}<\p><br>
+                                                  <p>CPF: ${localStorage.getItem('cpf')}<\p>
+                                                  <br><p>${localStorage.getItem('logradouro' )}<\p><br>
+                                                  <p>Bairro: ${localStorage.getItem('bairro' )}<\p><br>
+                                                  <p>Cidade: ${localStorage.getItem('localidade' )}<\p><br>`
 };
 
 
 // // Função que iniciará a aplicação
 function startApplication() {
-
     hideContent()
     verificaEventos()
     localStorage.clear()
@@ -221,8 +246,15 @@ function startApplication() {
 
 };
 
+// function verificaPreenchimentoFormulario(){
+
+//     if (cpf !== '' && nome !== '' && dataNasc !== '' && cep !== '' && localidade !== '' && logradouro !== '' && bairro !== ''){
+//         showActiveContent()
+//     } else  
+//         alert('Volte e preencha todos os campos')
+
+
+// };
+
 
 startApplication()
-
-
-
