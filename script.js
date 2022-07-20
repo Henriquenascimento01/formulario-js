@@ -5,6 +5,8 @@ const dcmt = document.querySelector.bind(document)
 const cep = dcmt('#cep');
 const bairro = dcmt('#bairro').value
 const logradouro = dcmt('#logradouro').value
+const localidade = dcmt('#localidade').value
+const tamCPF = dcmt('.cpf');
 
 // cria objeto para para criar dinamismo entre as páginas
 const html = {
@@ -16,6 +18,17 @@ const html = {
     button: [...dcmt('.button').children],
     finalizacao: dcmt('.finalizacao'),
 };
+
+// mascara de cpf
+tamCPF.addEventListener('keypress', () => {
+    let inputLength = tamCPF.value.length
+
+    if (inputLength === 3 || inputLength === 7){
+        tamCPF.value += '.'
+    } else if (inputLength === 11){
+        tamCPF.value += '-'
+    }
+})
 
 // valida o cpf informado
 function isCPF() {
@@ -44,6 +57,8 @@ function isCPF() {
         return false;
     return true;
 };
+
+
 
 // valida name usuario
 function validaNome() {
@@ -127,11 +142,16 @@ function verificaEventos() {
 
 };
 
+
+
+
 // valida o cep informado 
 if (cep.length < 9) {
     alert('CEP invalido')
 } else {
 
+    
+    
     // realiza conexão com api para trazer os dados a partir do cep informado
     const showData = (result) => {
         for (const campo in result) {
@@ -143,12 +163,18 @@ if (cep.length < 9) {
         localStorage.setItem('cep', result.cep)
         localStorage.setItem('logradouro', result.logradouro)
         localStorage.setItem('bairro', result.bairro)
-
+        localStorage.setItem('localidade', result.localidade)
+        
+        
     }
 
     // evento para verificar o foco, afim de preencher os campos de forma dinamica 
     cep.addEventListener("blur", (e) => {
         let search = cep.value.replace("-", "")
+
+        if(search.length < 8){
+            alert('CEP invalido')
+        }  
 
         const options = {
             method: 'GET',
@@ -177,7 +203,8 @@ function show() {
                                               <p>Data de Nascimento: ${localStorage.getItem('dtNasc')}<\p><br>
                                               <p>CPF: ${localStorage.getItem('cpf')}<\p>
                                               <br><p>${localStorage.getItem('logradouro' )}<\p><br>
-                                              <p>Bairro: ${localStorage.getItem('bairro' )}<\p><br>`
+                                              <p>Bairro: ${localStorage.getItem('bairro' )}<\p><br>
+                                              <p>Cidade: ${localStorage.getItem('localidade' )}<\p><br>`
 };
 
 
