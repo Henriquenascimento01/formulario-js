@@ -15,26 +15,25 @@
 
         <div class="abas-navegacao">
             <button class="botaoInicio" data-id="dados" data-open>Dados</button>
-            <button class="botaoEndereco" data-id="endereco">Endereço</button>
-            <button class="botaoFinal" data-id="finalizacao" >Finalização</button> <br><br></br><br>
+            <button class="botaoEndereco" data-id="endereco" disabled>Endereço</button>
+            <button class="botaoFinal" data-id="finalizacao" disabled>Finalização</button> <br><br></br><br>
         </div>
         <!--Primeira página-->
         <div class="area-form">
             <section id="dados">
                 <form method="post" name="forms">
                     <label>Nome*</label>
-                    <input type="text" id="name" placeholder="Digite seu nome"><br>
+                    <input type="text" id="name" placeholder="Digite seu nome" autocomplete = "off"><br>
 
                     <label>Data de nascimento*</label>
                     <input type="date" id="date" placeholder="YYYY-MM-DD" min="0000-00-00" max="2022-05-19"><br>
 
                     <labeld>CPF*</labeld>
-                    <input class="cpf" type="text" id="cpf" placeholder="000.000.000-00" required autocomplete="off"
-                        maxlength="14"><br><br>
+                    <input class="cpf" type="text" id="cpf" placeholder="000.000.000-00" required autocomplete="off"maxlength="14"><br><br>
 
                     <div class="button">
 
-                        <button type="button" data-id="endereco" onclick="validaNome()">Avançar</button>
+                        <button id="botaoAvancar" type="button" data-id="endereco" onclick="validaNome()" value="" disabled="true">Avançar</button>
 
                     </div>
 
@@ -62,7 +61,7 @@
                     <div class="buttons">
 
                         <button type="button" data-id="dados">Voltar</button>
-                        <button type="button" data-id="finalizacao" onclick="show()">Finalizar</button>
+                        <button id="botaoFinalizar" type="button" data-id="finalizacao" onclick="show()" value="" disabled="true">Finalizar</button>
 
                     </div>
 
