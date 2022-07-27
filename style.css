@@ -1,0 +1,110 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(pngtree-abstract-lattice-blur-business-gray-background-image_765597.jpg);
+    height: 100vh;
+    color: var(--white);
+}
+
+header {
+    margin-top: 32px;
+    text-align: center;
+    height: 100px;
+    
+}
+
+.container{
+    margin: 30px; 
+    width: 420px;
+    border-radius: 40px;
+    background-color: #C0C0C0;
+    height: auto;
+
+}
+
+.abas-navegacao button {
+    color: black;
+    border: none;
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 25px;
+    outline: none;
+    
+    margin: 12px;
+    display: block;
+    cursor: pointer;
+    float: left;
+
+}
+
+button::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    transition: .10s;
+    
+}
+button:hover::after,
+button.active::after {
+  width: 90%;
+}
+
+input {
+    width: 90%;
+    height: 30px;
+    margin-bottom: 30px;
+    margin: 15px;
+    border: none;
+    flex-direction: row;
+    outline: none;
+    font-size: 15px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+
+.finalizacao, h2 {
+   text-align: center;
+}
+
+.area-form>section {
+    animation: up 1s;
+}
+
+@keyframes up {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+ 
+    to {
+    opacity: 1;
+ }
+
+}
+
+.button, .buttons {
+    text-align: center;
+    height: auto;
+    padding: 10px;
+    border-radius: 20px;
+    justify-content: center;
+}
