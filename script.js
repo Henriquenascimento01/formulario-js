@@ -272,30 +272,25 @@ function consultaCEP() {
 // mostra o resultado inseridos na primeira aba
 
 function show() {
-  html.finalizacao.innerHTML = `<p><br>Nome: ${localStorage.getItem(
-    "nome"
-  )}<\p><br>
-                                                  <p>Data de Nascimento: ${localStorage.getItem(
-                                                    "dtNasc"
-                                                  )}<\p><br>
-                                                  <p>CPF: ${localStorage.getItem(
-                                                    "cpf"
-                                                  )}<\p>
-                                                  <br><p>${localStorage.getItem(
-                                                    "logradouro"
-                                                  )}<\p><br>
-                                                  <p>Bairro: ${localStorage.getItem(
-                                                    "bairro"
-                                                  )}<\p><br>
-                                                  <p>Cidade: ${localStorage.getItem(
-                                                    "localidade"
-                                                  )}<\p><br>
-                                                  <p>Número endereço: ${localStorage.getItem(
-                                                    "number-adress"
-                                                  )}<\p><br>
-                                                  <p>Dias até aniversário: ${localStorage.getItem(
-                                                    "dias-ate-aniversario"
-                                                  )}<\p><br>`;
+  const nome = localStorage.getItem("nome")
+  const dtNasc = localStorage.getItem("dtNasc")
+  const cpf = localStorage.getItem("cpf")
+  const logradouro = localStorage.getItem("logradouro")
+  const bairro = localStorage.getItem("bairro")
+  const cidade = localStorage.getItem("localidade")
+  const numEnd = localStorage.getItem("number-adress")
+  const daysUntilBday = localStorage.getItem("dias-ate-aniversario")
+  
+  html.finalizacao.innerHTML = `
+    <br><p>Nome: ${nome}<\p><br>
+    <p>Data de Nascimento: ${dtNasc}<\p><br>
+    <p>CPF: ${cpf}<\p><br>
+    <p>Logradouro: ${logradouro}<\p><br>
+    <p>Bairro: ${bairro}<\p><br>
+    <p>Cidade: ${cidade}<\p><br>
+    <p>Número endereço: ${numEnd}<\p><br>
+    <p>Dias até aniversário: ${daysUntilBday}<\p><br>
+  `;
 }
 
 // // Função que iniciará a aplicação
