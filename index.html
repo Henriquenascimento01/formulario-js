@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,64 +8,74 @@
     <link rel="stylesheet" href="./style.css" type="text/css">
     <title>Formulário de cadastro</title>
 </head>
+
 <body>
     <div class="container">
 
 
-            <div class="abas-navegacao">
-                <button  data-id="dados" data-open>Dados</button>
-                <button  data-id="endereco">Endereço</button>
-                <button  data-id="finalizacao">Finalização</button>  <br><br></br><br>
-            </div>
-            <!--Primeira página-->
+        <div class="abas-navegacao">
+            <button class="botaoInicio" data-id="dados" data-open>Dados</button>
+            <button class="botaoEndereco" data-id="endereco" disabled>Endereço</button>
+            <button class="botaoFinal" data-id="finalizacao" disabled>Finalização</button> <br><br></br><br>
+        </div>
+        <!--Primeira página-->
         <div class="area-form">
-                <section id="dados">
-                    <form>
-                        <label for="name">Nome*</label>
-                        <input type="text" id="name" placeholder="Digite seu nome"><br>
-                        
-                        <label for="dataNas">Data de nascimento*</label>
-                        <input type="date" id="date"><br>
+            <section id="dados">
+                <form method="post" name="forms">
+                    <label>Nome*</label>
+                    <input type="text" id="name" placeholder="Digite seu nome" autocomplete="off"><br>
 
-                        <labeld for="cpf">CPF*</labeld>
-                        <input type="text" id="cpf" placeholder="000.000.000-00"><br><br>
+                    <label>Data de nascimento*</label>
+                    <input type="date" id="date" placeholder="YYYY-MM-DD" min="0000-00-00" max="2022-05-19"><br>
 
-                        <div class="button">
+                    <labeld>CPF*</labeld>
+                    <input class="cpf" type="text" id="cpf" placeholder="000.000.000-00" required autocomplete="off"maxlength="14"><br><br>
 
-                            <button type="button" data-id="endereco" onclick="validaDadosPreenchidos()">Avançar</button>
+                    <div class="button">
 
-                        </div> 
+                        <button id="botaoAvancar" type="button" data-id="endereco" onclick="validaNome()" value="" disabled="true">Avançar</button>
 
+                    </div>
 
+                </form>
 
-                    </form>
-                </section>
-            
+            </section>
+
             <!--Segunda página-->
-            
-                <section id="endereco">
-                    <form method="get">
-                        <label for="cep">Digite seu CEP</label>
-                        <input type="text" name="cep id="cep" placeholder="Digite seu CEP"><br><br>
 
-                        <label for="logradouro">Logradouro*</label>
-                        <input type="text" id="logradouro"><br>
+            <section id="endereco">
+                <form method="get" name="forms2">
+                    <label>Digite seu CEP</label>
+                    <input
+                        type="text"
+                        name="cep"
+                        id="cep"
+                        placeholder="Digite seu CEP"
+                        maxlength="9"
+                        onchange="consultaCEP()"><br><br>
 
-                        <label for="bairro">Bairro*</label>
-                        <input type="text" id="bairro"><br>
+                    <label>Logradouro*</label>
+                    <input type="text" id="logradouro"><br>
 
-                        <label for="numero">Número*</label>
-                        <input type="text" id="numero"><br><br>
+                    <label>Bairro*</label>
+                    <input type="text" id="bairro"><br>
 
-                        <div class="buttons">
+                    <label>Cidade*</label>
+                    <input type="text" id="localidade"> <br><br>
 
-                            <button type="button" data-id="dados" class="botao-voltar">Voltar</button>  <button type="button" data-id="finalizacao" class="botao-finalizar">Finalizar</button>
+                    <label>Número endereço*</label>
+                    <input type="number" id="number-adress"> <br><br>
 
-                        </div>
+                    <div class="buttons">
 
-                    </form>
-                </section>
-            
+                        <button type="button" data-id="dados">Voltar</button>
+                        <button id="botaoFinalizar" type="button" data-id="finalizacao" onclick="show()" value="" disabled="true">Finalizar</button>
+
+                    </div>
+
+                </form>
+            </section>
+
 
 
             <!--Página de finalização-->
@@ -72,18 +83,19 @@
                 <h2>Obrigado por se cadastrar</h2>
                 <br>
                 <div class="finalizacao">
-                    
+
                     <b>Seus dados</b>
 
                 </div>
             </section>
-        
+
         </div>
 
 
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="./script.js"></script>
 </body>
+
 </html>

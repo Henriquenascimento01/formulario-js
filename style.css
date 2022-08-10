@@ -39,7 +39,7 @@ header {
     font-size: 12px;
     padding: 25px;
     outline: none;
-    position: relative;
+    
     margin: 12px;
     display: block;
     cursor: pointer;
@@ -81,7 +81,7 @@ label {
 }
 
 
-#finalizacao {
+.finalizacao, h2 {
    text-align: center;
 }
 
